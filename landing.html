@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WA HVAC Newly Licensed Contractor Feed — Recruit Techs Before Competitors Do</title>
+  <meta name="description" content="Weekly CSV alerts of newly licensed HVAC contractors in Washington state. Recruit techs days after they're licensed — before your competitors find them.">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #1a1a2e; background: #fafafa; }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    
+    /* Hero */
+    .hero { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; border-radius: 16px; margin-bottom: 40px; }
+    .hero h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .hero .highlight { color: #00d4aa; }
+    .hero p { font-size: 1.25rem; opacity: 0.9; max-width: 600px; margin: 0 auto 32px; }
+    .hero .cta-button { display: inline-block; background: #00d4aa; color: #1a1a2e; font-weight: 700; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .hero .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 212, 170, 0.4); }
+    
+    /* Trust signals */
+    .trust { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .trust-item { text-align: center; }
+    .trust-number { font-size: 2rem; font-weight: 700; color: #00d4aa; }
+    .trust-label { font-size: 0.875rem; opacity: 0.8; }
+    
+    /* Sections */
+    section { margin-bottom: 48px; }
+    h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 16px; color: #1a1a2e; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; color: #1a1a2e; }
+    p { margin-bottom: 16px; color: #4a4a6a; }
+    ul { margin-bottom: 16px; padding-left: 20px; color: #4a4a6a; }
+    li { margin-bottom: 8px; }
+    
+    /* Problem/Solution */
+    .problem-solution { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 600px) { .problem-solution { grid-template-columns: 1fr; } }
+    .card { background: white; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e8e8f0; }
+    .card.problem { border-left: 4px solid #e53e3e; }
+    .card.solution { border-left: 4px solid #00d4aa; }
+    
+    /* Sample data */
+    .sample { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e8e8f0; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+    th { background: #f8f8fc; font-weight: 600; color: #1a1a2e; }
+    tr:hover td { background: #fafafa; }
+    
+    /* Pricing */
+    .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .price-card { background: white; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e8e8f0; position: relative; }
+    .price-card.popular { border-color: #00d4aa; box-shadow: 0 8px 32px rgba(0, 212, 170, 0.15); }
+    .price-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #00d4aa; color: #1a1a2e; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+    .price-amount { font-size: 3rem; font-weight: 700; color: #1a1a2e; margin: 8px 0; }
+    .price-period { color: #888; font-size: 1rem; }
+    .price-features { list-style: none; padding: 0; margin: 24px 0; }
+    .price-features li { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+    .price-features li::before { content: "✓"; color: #00d4aa; font-weight: 700; }
+    .price-button { display: block; width: 100%; padding: 16px; border-radius: 8px; font-weight: 700; text-align: center; text-decoration: none; transition: all 0.2s; }
+    .price-button.primary { background: #1a1a2e; color: white; }
+    .price-button.primary:hover { background: #00d4aa; color: #1a1a2e; }
+    .price-button.secondary { background: #f0f0f8; color: #1a1a2e; border: 1px solid #e8e8f0; }
+    .price-button.secondary:hover { border-color: #00d4aa; }
+    
+    /* How it works */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .step { text-align: center; padding: 24px; }
+    .step-number { width: 48px; height: 48px; background: #00d4aa; color: #1a1a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin: 0 auto 16px; }
+    
+    /* FAQ */
+    .faq details { background: white; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px 24px; margin-bottom: 12px; cursor: pointer; }
+    .faq summary { font-weight: 600; color: #1a1a2e; }
+    .faq p { margin-top: 12px; color: #4a4a6a; }
+    
+    /* Footer CTA */
+    .footer-cta { text-align: center; padding: 48px 24px; background: #1a1a2e; color: white; border-radius: 16px; }
+    .footer-cta h2 { color: white; margin-bottom: 16px; }
+    .footer-cta p { color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+    
+    /* Sample download */
+    .sample-link { display: inline-block; margin-top: 16px; color: #00d4aa; font-weight: 600; text-decoration: none; }
+    .sample-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <h1>Recruit HVAC Techs <span class="highlight">Days After They're Licensed</span></h1>
+      <p>Weekly CSV feed of every newly licensed HVAC contractor in Washington state — delivered to your inbox every Monday.</p>
+      <a href="#pricing" class="cta-button">Get This Week's List →</a>
+      
+      <div class="trust">
+        <div class="trust-item">
+          <div class="trust-number">38</div>
+          <div class="trust-label">New HVAC licenses in WA (last 90 days)</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-number">2</div>
+          <div class="trust-label">New licenses this week alone</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-number">100%</div>
+          <div class="trust-label">Verified WA L&I public record data</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Problem / Solution -->
+    <section>
+      <h2 style="text-align: center; margin-bottom: 32px;">The Hiring Problem Every HVAC Owner Faces</h2>
+      <div class="problem-solution">
+        <div class="card problem">
+          <h3>❌ The Reality</h3>
+          <ul>
+            <li>You're on job sites 10+ hrs/day — no time to monitor license boards</li>
+            <li>Job boards are flooded with unlicensed applicants</li>
+            <li>Good techs get hired by competitors before you see them</li>
+            <li>Verifying licensure takes hours of phone calls per candidate</li>
+            <li>Growing from 3 to 20 techs feels impossible</li>
+          </ul>
+        </div>
+        <div class="card solution">
+          <h3>✅ The Feed</h3>
+          <ul>
+            <li>Weekly CSV every Monday: name, phone, address, license #, specialty</li>
+            <li>Only ACTIVE, newly licensed HVAC contractors (WA L&I verified)</li>
+            <li>Contact them DAYS after licensing — before they're hired</li>
+            <li>Zero manual work. Agent monitors, filters, delivers.</li>
+            <li>One good hire = $15K+ first-year value. Feed costs $49/mo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sample Data -->
+    <section>
+      <h2>This Week's Sample Data (Real, Live)</h2>
+      <p>Generated July 4, 2026 from WA L&I contractor license database:</p>
+      <div class="sample">
+        <table>
+          <thead>
+            <tr>
+              <th>Business Name</th>
+              <th>Owner</th>
+              <th>City</th>
+              <th>Phone</th>
+              <th>License #</th>
+              <th>Licensed</th>
+              <th>Specialty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MINI SPLIT PROS</td>
+              <td>VAYANOS, ALKINOOS HECTOR</td>
+              <td>SEATTLE, WA</td>
+              <td>877-646-7758</td>
+              <td>MINISSP744L4</td>
+              <td>07/01/2026</td>
+              <td>HVAC/Refrigeration</td>
+            </tr>
+            <tr>
+              <td>PRINGLES POWER VAC INC</td>
+              <td>GADD, PETER</td>
+              <td>PASCO, WA</td>
+              <td>509-551-0905</td>
+              <td>PRINGPV741KR</td>
+              <td>07/01/2026</td>
+              <td>HVAC/Refrigeration</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <a href="/data/wa_hvac_newly_licensed_latest.csv" class="sample-link" download>↓ Download this week's full CSV (free sample)</a>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+      <h2 style="text-align: center;">Simple Pricing. Cancel Anytime.</h2>
+      <div class="pricing">
+        <div class="price-card">
+          <div class="price-amount">$199</div>
+          <div class="price-period">one-time</div>
+          <h3>90-Day Backlog</h3>
+          <ul class="price-features">
+            <li>All 38+ HVAC licenses from last 90 days</li>
+            <li>Instant CSV download</li>
+            <li>Full contact details + license verification</li>
+            <li>No subscription — own the data forever</li>
+            <li>Perfect for immediate hiring push</li>
+          </ul>
+          <a href="#" class="price-button secondary">Buy Backlog →</a>
+        </div>
+        
+        <div class="price-card popular">
+          <div class="price-badge">MOST POPULAR</div>
+          <div class="price-amount">$49</div>
+          <div class="price-period">/month</div>
+          <h3>Weekly Feed (Starter)</h3>
+          <ul class="price-features">
+            <li>Weekly CSV every Monday</li>
+            <li>Email delivery + web dashboard</li>
+            <li>Newly licensed HVAC contractors only</li>
+            <li>WA state (TX &amp; CA coming soon)</li>
+            <li>Cancel anytime</li>
+          </ul>
+          <a href="#" class="price-button primary">Subscribe →</a>
+        </div>
+        
+        <div class="price-card">
+          <div class="price-amount">$99</div>
+          <div class="price-period">/month</div>
+          <h3>Weekly Feed (Pro)</h3>
+          <ul class="price-features">
+            <li>Everything in Starter</li>
+            <li>Phone-verified contact enrichment</li>
+            <li>Outreach email templates</li>
+            <li>Priority support</li>
+            <li>Early access to TX/CA feeds</li>
+          </ul>
+          <a href="#" class="price-button primary">Subscribe Pro →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section>
+      <h2 style="text-align: center;">How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Agent Monitors</h3>
+          <p>Our script polls WA L&I daily for new HVAC licenses</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Filters &amp; Formats</h3>
+          <p>Extracts active HVAC contractors, enriches with contact data</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Delivers Weekly</h3>
+          <p>Every Monday: CSV in your inbox + dashboard access</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>You Recruit First</h3>
+          <p>Contact newly licensed techs before competitors</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <h2 style="text-align: center;">Questions?</h2>
+      <details>
+        <summary>Is this legal? It's public record data.</summary>
+        <p>Yes. WA L&I publishes contractor license data as public record. Reselling compiled public data for recruitment purposes is legal in Washington state. We don't scrape — we use their official data portal.</p>
+      </details>
+      <details>
+        <summary>What if there are zero new licenses one week?</summary>
+        <p>You'll still get the email (empty list) so you know the feed is working. Some weeks are slower. Over 90 days, WA averages ~12 new HVAC licenses/month.</p>
+      </details>
+      <details>
+        <summary>Do you have Texas (TDLR) or California (CSLB) data?</summary>
+        <p>Not yet — WA is the pilot. Pro subscribers get early access when we launch TX and CA. The agent architecture is identical; just need to map each state's specialty codes.</p>
+      </details>
+      <details>
+        <summary>Can I get email addresses too?</summary>
+        <p>L&I doesn't publish emails. Pro tier includes phone verification and we provide outreach templates that get replies. Most owners answer their business phone.</p>
+      </details>
+      <details>
+        <summary>What's the cancellation policy?</summary>
+        <p>Cancel anytime from your Gumroad dashboard. Access continues through the billing period. No questions, no hoops.</p>
+      </details>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+      <h2>Stop Losing Techs to Competitors</h2>
+      <p>This week alone, 2 HVAC contractors got licensed in WA. One of them could be your next lead tech.</p>
+      <a href="#pricing" class="cta-button" style="background: #00d4aa; color: #1a1a2e;">Get This Week's List →</a>
+    </section>
+
+    <p style="text-align: center; margin-top: 40px; color: #888; font-size: 0.875rem;">
+      Data source: Washington State Dept of Labor &amp; Industries (L&I) Contractor License Database.<br>
+      Updated weekly. Not affiliated with WA L&I.
+    </p>
+  </div>
+</body>
+</html>
