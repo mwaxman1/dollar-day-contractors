@@ -10,11 +10,20 @@ from pathlib import Path
 
 TRACKER_FILE = Path("/home/mike/projects/dollar-day-contractors/outreach_log.json")
 
+DEFAULT_METRICS = {
+    "samples_requested": 0,
+    "paying_signals": 0,
+    "subscribers": 0,
+    "upwork_replies": 0,
+    "reddit_engagement": 0,
+    "forum_replies": 0,
+}
+
 def load_log():
     if TRACKER_FILE.exists():
         with open(TRACKER_FILE) as f:
             return json.load(f)
-    return {"entries": [], "metrics": {"samples_requested": 0, "paying_signals": 0, "subscribers": 0}}
+    return {"entries": [], "metrics": DEFAULT_METRICS.copy()}
 
 def save_log(log):
     with open(TRACKER_FILE, "w") as f:
@@ -39,8 +48,18 @@ def update_metric(metric, delta=1):
     log = load_log()
     if metric in log["metrics"]:
         log["metrics"][metric] += delta
-        save_log(log)
-        print(f"Metric updated: {metric} = {log['metrics'][metric]}")
+    else:
+        log["metrics"][metric] = delta
+    save_log(log)
+    print(f"Metric updated: {metric} = {log['metrics'][metric]}")
+
+def init_metrics():
+    log = load_log()
+    for k, v in DEFAULT_METRICS.items():
+        if k not in log["metrics"]:
+            log["metrics"][k] = v
+    save_log(log)
+    print("Metrics initialized")
 
 def show_summary():
     log = load_log()
@@ -60,7 +79,6 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         show_summary()
     elif sys.argv[1] == "log":
-        # python outreach_tracker.py log "Day 1" "reddit" "posted" "r/HVAC" "3 upvotes, 2 comments asking for link"
         _, day, channel, action, target, *rest = sys.argv
         response = rest[0] if rest else None
         add_entry(day, channel, action, target, response)
@@ -68,7 +86,9 @@ if __name__ == "__main__":
         _, metric, *rest = sys.argv
         delta = int(rest[0]) if rest else 1
         update_metric(metric, delta)
+    elif sys.argv[1] == "init":
+        init_metrics()
     elif sys.argv[1] == "summary":
         show_summary()
     else:
-        print("Usage: python outreach_tracker.py [log|metric|summary] ...")
+        print("Usage: python outreach_tracker.py [log|metric|init|summary] ...")

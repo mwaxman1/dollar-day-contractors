@@ -1,0 +1,16 @@
+# Data files
+data/*.csv
+*.csv
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
